@@ -147,8 +147,8 @@ func setupRoutes(aiHandler *handler.AIHandler) http.Handler {
 	// Apply CORS middleware
 	handler = aiHandler.EnableCORS(handler)
 	
-	// Apply rate limiting (60 requests per minute)
-	handler = aiHandler.RateLimiter(60)(handler)
+	// Apply rate limiting from configuration
+	handler = aiHandler.RateLimiter(cfg.HuggingFace.RateLimitRPM)(handler)
 	
 	// Apply request logging (should be last/outermost)
 	handler = aiHandler.RequestLogger(handler)
