@@ -72,7 +72,7 @@ func (s *HuggingFaceService) GenerateText(ctx context.Context, req *model.AIRequ
 		Parameters: map[string]interface{}{
 			"max_new_tokens": req.MaxTokens,
 			"temperature":    req.Temperature,
-			"top_p":         req.TopP,
+			"top_p":          req.TopP,
 		},
 		Options: map[string]interface{}{
 			"wait_for_model": true,
@@ -125,7 +125,7 @@ func (s *HuggingFaceService) GenerateText(ctx context.Context, req *model.AIRequ
 			Text:         generatedText,
 			FinishReason: "stop",
 		}
-		
+
 		// Rough token estimation (1 token ≈ 4 characters)
 		totalTokens += (len(req.Prompt) + len(generatedText)) / 4
 	}
@@ -137,9 +137,9 @@ func (s *HuggingFaceService) GenerateText(ctx context.Context, req *model.AIRequ
 	}
 
 	s.logger.Info(ctx, "Text generation completed", map[string]interface{}{
-		"request_id":     req.ID,
-		"processing_ms":  processingTime.Milliseconds(),
-		"total_tokens":   totalTokens,
+		"request_id":    req.ID,
+		"processing_ms": processingTime.Milliseconds(),
+		"total_tokens":  totalTokens,
 	})
 
 	return aiResponse, nil
@@ -238,7 +238,7 @@ func (s *HuggingFaceService) ValidateModel(modelName string) error {
 	if modelName == "" {
 		return fmt.Errorf("model name cannot be empty")
 	}
-	
+
 	// Basic validation - in a real implementation, you might want to
 	// make a request to check if the model exists
 	supportedModels := []string{
@@ -257,7 +257,7 @@ func (s *HuggingFaceService) ValidateModel(modelName string) error {
 	s.logger.Warn(context.Background(), "Using unvalidated model", map[string]interface{}{
 		"model": modelName,
 	})
-	
+
 	return nil
 }
 
